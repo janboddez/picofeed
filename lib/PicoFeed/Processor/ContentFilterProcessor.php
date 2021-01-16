@@ -27,7 +27,8 @@ class ContentFilterProcessor extends Base implements ItemProcessorInterface
     public function execute(Feed $feed, Item $item)
     {
         if ($this->config->getContentFiltering(true)) {
-            $filter = Filter::html($item->getContent(), $feed->getSiteUrl());
+            // Have the entry URL act as the base URL for making URLs absolute.
+            $filter = Filter::html($item->getContent(), $item->getUrl() ?: $feed->getSiteUrl());
             $filter->setConfig($this->config);
             $item->setContent($filter->execute());
         } else {

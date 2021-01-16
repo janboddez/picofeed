@@ -61,6 +61,15 @@ class Url
 
         if ($link->isRelativeUrl()) {
             if ($link->isRelativePath()) {
+                if (strpos($link->url, '#') === 0) {
+                    // "Jump links" refer to the _current_, i.e., item, URL, not
+                    // the "folder" (if any) one level up. (This is not true
+                    // for, e.g., _image_ URLs.)
+
+                    // Because of our update of `lib/PicoFeed/Processor/ContentFilterProcessor`,
+                    // `$website->url` now (almost always) holds the _item_ URL.
+                    return $link->getAbsoluteUrl($website->url);
+                }
                 return $link->getAbsoluteUrl($website->getBaseUrl($website->getBasePath()));
             }
 
@@ -69,6 +78,10 @@ class Url
             $link->setScheme($website->getScheme());
         }
 
+        if (strpos($item_url, '#') === 0) {
+            // Same remark as above.
+            return $link->getAbsoluteUrl($website->url);
+        }
         return $link->getAbsoluteUrl();
     }
 
