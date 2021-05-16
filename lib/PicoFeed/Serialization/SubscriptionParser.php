@@ -114,7 +114,7 @@ class SubscriptionParser
      */
     protected function findSiteUrl()
     {
-        return (string) $this->outlineElement['htmlUrl'] ?? $this->findFeedUrl();
+        return (string) ($this->outlineElement['htmlUrl'] ?? $this->findFeedUrl());
     }
 
     /**
@@ -125,7 +125,7 @@ class SubscriptionParser
      */
     protected function findType()
     {
-        return (string) $this->outlineElement['version'] ?? (string) $this->outlineElement['type'] ?? 'rss';
+        return (string) ($this->outlineElement['version'] ?? $this->outlineElement['type'] ?? 'rss');
     }
 
     /**
