@@ -70,6 +70,8 @@ class Tag extends Base
         'q',
         'sup',
         'sub',
+        'b',
+        'i',
     );
 
     /**
