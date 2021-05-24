@@ -239,7 +239,11 @@ class XmlParser
         $result = '';
 
         if (is_array($value) && count($value) > 0) {
-            $result = (string) $value[0];
+            if (is_a($value[0], 'SimpleXMLElement') && isset($value[0]->a)) {
+                $result = (string) $value[0]->a; // Cf. https://alistapart.com/main/feed/
+            } else {
+                $result = (string) $value[0];
+            }
         } elseif (is_a($value, 'SimpleXMLElement')) {
             return $result = (string) $value;
         }
